@@ -1,0 +1,23 @@
+C:\Users\eduaucca\Desktop\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\version 2\cliente inicial\bin\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\version 2\cliente inicial\bin\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.Form1.resources
+C:\Users\eduaucca\Desktop\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.Properties.Resources.resources
+C:\Users\eduaucca\Desktop\version 2\cliente inicial\obj\x86\Debug\Proyecto_V2.csproj.GenerateResource.Cache
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\bin\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\bin\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\obj\x86\Debug\Proyecto_V2.csprojResolveAssemblyReference.cache
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.Form1.resources
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\obj\x86\Debug\Proyecto_V1.Properties.Resources.resources
+C:\Users\eduaucca\Desktop\SO\version 2\cliente inicial\obj\x86\Debug\Proyecto_V2.csproj.GenerateResource.Cache
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\bin\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\bin\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\obj\x86\Debug\Proyecto_V2.csprojResolveAssemblyReference.cache
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\obj\x86\Debug\Proyecto_V1.Form1.resources
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\obj\x86\Debug\Proyecto_V1.Properties.Resources.resources
+C:\Users\eduaucca\Desktop\Version3 sin acabar\cliente inicial\obj\x86\Debug\Proyecto_V2.csproj.GenerateResource.Cache

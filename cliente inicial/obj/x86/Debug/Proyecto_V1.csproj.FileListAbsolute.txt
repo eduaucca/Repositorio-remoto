@@ -1,0 +1,33 @@
+C:\Users\decap\AppData\Local\Temporary Projects\Proyecto_V1\bin\Debug\Proyecto_V1.exe
+C:\Users\decap\AppData\Local\Temporary Projects\Proyecto_V1\bin\Debug\Proyecto_V1.pdb
+C:\Users\decap\AppData\Local\Temporary Projects\Proyecto_V1\obj\x86\Debug\Proyecto_V1.Form1.resources
+C:\Users\decap\AppData\Local\Temporary Projects\Proyecto_V1\obj\x86\Debug\Proyecto_V1.Properties.Resources.resources
+C:\Users\decap\AppData\Local\Temporary Projects\Proyecto_V1\obj\x86\Debug\Proyecto_V1.csproj.GenerateResource.Cache
+C:\Users\decap\AppData\Local\Temporary Projects\Proyecto_V1\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\decap\AppData\Local\Temporary Projects\Proyecto_V1\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\decap\Desktop\Proyecto SO\Proyecto V1\Proyecto_V1\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\decap\Desktop\Proyecto SO\Proyecto V1\Proyecto_V1\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\bin\Debug\Proyecto_V1.exe
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\bin\Debug\Proyecto_V1.pdb
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.Form1.resources
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.Properties.Resources.resources
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.csproj.GenerateResource.Cache
+C:\Users\Eduardo\Downloads\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.csprojResolveAssemblyReference.cache
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\bin\Debug\Proyecto_V1.exe
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\bin\Debug\Proyecto_V1.pdb
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.csprojResolveAssemblyReference.cache
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.Form1.resources
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.Properties.Resources.resources
+C:\Users\joela\Desktop\SO.2\Proyecto V1\cliente inicial\obj\x86\Debug\Proyecto_V1.csproj.GenerateResource.Cache
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\bin\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\bin\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\obj\x86\Debug\Proyecto_V1.csprojResolveAssemblyReference.cache
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\obj\x86\Debug\Proyecto_V1.Form1.resources
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\obj\x86\Debug\Proyecto_V1.Properties.Resources.resources
+C:\Users\eduaucca\Desktop\VERSION1\cliente inicial\obj\x86\Debug\Proyecto_V1.csproj.GenerateResource.Cache
