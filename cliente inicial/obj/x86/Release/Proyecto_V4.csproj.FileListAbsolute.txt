@@ -1,0 +1,3 @@
+C:\Users\eduaucca\Desktop\Version4 (trabajar aqui)\cliente inicial\obj\x86\Release\Proyecto_V4.Form1.resources
+C:\Users\eduaucca\Desktop\Version4 (trabajar aqui)\cliente inicial\obj\x86\Release\Proyecto_V4.Properties.Resources.resources
+C:\Users\eduaucca\Desktop\Version4 (trabajar aqui)\cliente inicial\obj\x86\Release\Proyecto_V4.csproj.GenerateResource.Cache
