@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Proyecto_V4;
 
-namespace Proyecto_V1
+
+namespace WindowsFormsApplication1
 {
     static class Program
     {
