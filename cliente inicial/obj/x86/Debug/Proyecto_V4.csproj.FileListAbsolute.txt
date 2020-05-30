@@ -7,3 +7,15 @@ C:\Users\eduaucca\Desktop\Version4 (trabajar aqui)\cliente inicial\obj\x86\Debug
 C:\Users\eduaucca\Desktop\Version4 (trabajar aqui)\cliente inicial\obj\x86\Debug\Proyecto_V4.Form1.resources
 C:\Users\eduaucca\Desktop\Version4 (trabajar aqui)\cliente inicial\obj\x86\Debug\Proyecto_V4.Properties.Resources.resources
 C:\Users\eduaucca\Desktop\Version4 (trabajar aqui)\cliente inicial\obj\x86\Debug\Proyecto_V4.Form2.resources
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\bin\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\bin\Debug\Proyecto_V1.pdb
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V4.csprojResolveAssemblyReference.cache
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V4.Form1.resources
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V4.Form2.resources
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V4.Properties.Resources.resources
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V4.csproj.GenerateResource.Cache
+C:\Users\eduaucca\Desktop\Version4\cliente inicial\obj\x86\Debug\Proyecto_V4.Interfaz_Grafica.resources
+C:\Users\eduaucca\Desktop\Version5\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\Version5\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb

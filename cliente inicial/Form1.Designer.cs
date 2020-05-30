@@ -45,6 +45,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.box_invi = new System.Windows.Forms.TextBox();
             this.Invitar_Bt = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.NombreEtiquetaLbl = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -206,14 +208,32 @@
             this.Invitar_Bt.UseVisualStyleBackColor = true;
             this.Invitar_Bt.Click += new System.EventHandler(this.Invitar_Bt_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(473, 417);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 13);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Este es el form de : ";
+            // 
+            // NombreEtiquetaLbl
+            // 
+            this.NombreEtiquetaLbl.AutoSize = true;
+            this.NombreEtiquetaLbl.Location = new System.Drawing.Point(593, 417);
+            this.NombreEtiquetaLbl.Name = "NombreEtiquetaLbl";
+            this.NombreEtiquetaLbl.Size = new System.Drawing.Size(35, 13);
+            this.NombreEtiquetaLbl.TabIndex = 26;
+            this.NombreEtiquetaLbl.Text = "label6";
+            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
-            this.dataGridView1.Location = new System.Drawing.Point(557, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(566, 29);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(154, 233);
+            this.dataGridView1.Size = new System.Drawing.Size(143, 230);
             this.dataGridView1.TabIndex = 24;
             // 
             // Column1
@@ -225,6 +245,8 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(889, 489);
+            this.Controls.Add(this.NombreEtiquetaLbl);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.Invitar_Bt);
             this.Controls.Add(this.box_invi);
@@ -271,6 +293,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox box_invi;
         private System.Windows.Forms.Button Invitar_Bt;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label NombreEtiquetaLbl;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
     }

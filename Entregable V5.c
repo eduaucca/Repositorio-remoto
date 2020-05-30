@@ -38,6 +38,7 @@ char creador_partida[20];
 
 //MYSQL//
 int err;
+int sockets[100];
 char consulta[100];//Lo usamos para preparar las conultas
 char insertar[100];
 MYSQL *conn;//Conector para acceder al servidor de bases de datos
@@ -158,16 +159,17 @@ void Update_Conectados (TConectados *l)
 	char conectados [200];
 	sprintf (conectados, "4/%d/",l->num);
 	
-	for (i; i < l->num; i++)
+	for (i = 0; i < l->num; i++)
 	{
 		strcat(conectados, l-> usuarios[i].usuario);
 		strcat(conectados, "/");
 	}
 	
+	
 	printf("Respuesta: %s\n",conectados);
 	
 	
-	
+	// Para informar a los demas usuarios
 	for ( i = 0; i < l->num; i++)
 	{
 		write(l->usuarios[i].socket, conectados, sizeof(conectados));
@@ -177,7 +179,7 @@ void Update_Conectados (TConectados *l)
 }
 
 
-int Add_User (TConectados *l, int socket, char usuario[50]) //1 -> A\ufff1adido Correctamente || 0 -> Lista llena
+int Add_User (TConectados *l, int socket, char usuario[50])
 {
 	if (l->num < 100)
 	{
@@ -283,8 +285,10 @@ void enviarMensajeUsuarios(TInvitados *l , char respuesta[10])
 	{
 		for(i = 0; i < l->num;i++)
 		{
-			sprintf(mensaje, "6/SI/");
-			printf("Este mensaje el invitado envia al cliente invitador : %s",mensaje);
+			
+			sprintf(mensaje, "6/SI/%d/",i);
+			
+			printf("Este mensaje el invitado envia al cliente invitador : %s\n",mensaje);
 			write(l->usuarios[i].socket, mensaje, strlen(mensaje));
 		
 		}
@@ -294,7 +298,7 @@ void enviarMensajeUsuarios(TInvitados *l , char respuesta[10])
 		for( i = 0; i < l->num; i++)
 		{
 			sprintf(mensaje, "6/NO/");
-			printf("Este mensaje el invitado envia al cliente invitador : %s",mensaje);
+			printf("Este mensaje el invitado envia al cliente invitador : %s\n",mensaje);
 			write(l->usuarios[i].socket,mensaje,strlen(mensaje));
 		}
 	}
@@ -428,6 +432,15 @@ int Dame_SocketConectado (TConectados *lista, char nombre[300], char socket[])
 	}
 	return 1;
 }
+void enviarFrase(TInvitados *l,char frase[20],char nombre[20])
+{
+	char mensaje[80];
+	sprintf(mensaje, "7/%s - %s/",nombre, frase);
+	for(int i = 0; i < l->num; i++)
+	{
+		write(l->usuarios[i].socket,mensaje,strlen(mensaje));
+	}	
+}
 void *AtenderCliente(void *socket)
 { // Mandamos la lista de conectados nada mas conectarse
 	Update_Conectados(&lista);
@@ -436,7 +449,6 @@ void *AtenderCliente(void *socket)
 	s = (int *) socket;
 	sock_conn = *s;
 	
-	int select; //selecciona que esta haciendo el usuario
 	char password[20];
 	char nombre[30];
 	
@@ -452,7 +464,8 @@ void *AtenderCliente(void *socket)
 		
 		char *p = strtok(buff, "/");
 		
-		select = atoi(p);
+		int select = atoi(p);
+		printf("seleccion: %d\n", select);
 		
 		if(select == 1) //Log In 0 -> correcta || 1 -> contrase?a incorrecta
 		{
@@ -465,17 +478,16 @@ void *AtenderCliente(void *socket)
 			p = strtok (NULL, "/");
 			strcpy (password, p); //almacenamos la password dada por el usuario
 			
-			pthread_mutex_lock( &mutex );
+			
 			// Ahora recibimos sus credenciales, que dejamos en buff
+			
 			int	logueado = Log_In (nombre, password);
 			
 			
 			if (logueado == 0) // se loguea correctamente
 			{
 				
-				
 				int add = Add_User(&lista, sock_conn, nombre);
-				
 				Update_Conectados(&lista);
 				
 				
@@ -502,11 +514,13 @@ void *AtenderCliente(void *socket)
 				printf("el nombre no se encuentra en la DB"); // el nombre no esta en la DB
 			}
 			
-			pthread_mutex_unlock( &mutex);
+			pthread_mutex_unlock(&mutex);
 			
 			
 			// Muestrame los conectados de la lista
+			
 			Dame_ListaConectados(&lista);
+			
 			select = 100;
 			
 		}
@@ -701,6 +715,17 @@ void *AtenderCliente(void *socket)
 			select = 100;
 			
 		}
+		if(select == 7)
+		{
+			printf("Entra a la seleccion 7\n");
+			p = strtok(NULL, "/");
+			char msj[20];
+			strcpy(msj, p);
+			printf("Mensaje de %s: %s\n",nombre,msj);
+			enviarFrase(&lista_partida, msj,nombre);
+			printf("Termina la seleccion 7\n");
+			select = 100;
+		}
 		
 		if(select == 0)
 		{
@@ -767,7 +792,7 @@ int main(int argc, char *argv[])
 	//htonl formatea el numero que recibe al formato necesario
 	serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
 	// escucharemos en el port 9055 o aprecidos en caso de error de blind
-	serv_adr.sin_port = htons(9550);
+	serv_adr.sin_port = htons(9050);
 	if (bind(sock_listen, (struct sockaddr *) &serv_adr, sizeof(serv_adr)) < 0)
 		printf ("Error al bind");
 	
@@ -777,9 +802,9 @@ int main(int argc, char *argv[])
 	
 	
 	int i = 0;
-	//int sockets[100];
-	TConectados lista;
-	pthread_t thread[100];
+	
+
+	pthread_t thread;
 	
 	for(;;)
 	{
@@ -789,8 +814,8 @@ int main(int argc, char *argv[])
 		sock_conn = accept(sock_listen, NULL, NULL);
 		printf ("Conexion establecida\n");
 		
-		lista.usuarios[i].socket = sock_conn;
-		pthread_create(&thread, NULL, AtenderCliente, &lista.usuarios[i].socket);
+		sockets[i] = sock_conn;
+		pthread_create(&thread, NULL, AtenderCliente,&sockets[i]);
 		i= i+1;
 		
 	} 

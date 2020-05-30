@@ -18,7 +18,7 @@ namespace Proyecto_V4
     {
         IPAddress direccion;
         IPEndPoint ipep;
-        private DataTable tabla;
+      
         string registro;
         string resultado;
         Socket socket;
@@ -29,14 +29,28 @@ namespace Proyecto_V4
         string invitado;
         string mi_nombre;
         bool res_partida;
+        Interfaz_Grafica ig;
 
         public Form1()
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
-            direccion = IPAddress.Parse("192.168.56.103");
-            ipep = new IPEndPoint(direccion, 9550);
+            direccion = IPAddress.Parse("147.83.117.22");
+            ipep = new IPEndPoint(direccion, 50020);
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            B_Usuario.Enabled = false;
+            B_Password.Enabled = false;
+            RegisterBt.Enabled = false;
+            LoginBt.Enabled = false;
+            desconectarBt.Enabled = false;
+            box_invi.Enabled = false;
+            Invitar_Bt.Enabled = false;
+            B_Usuario.Text = "Edu";
+            B_Password.Text = "manedu";
+        }
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -69,8 +83,14 @@ namespace Proyecto_V4
 
         private void button2_Click(object sender, EventArgs e) // Boton Logearse
         {
-            String registro = "1/" + B_Usuario.Text + "/" + B_Password.Text + "\0";
+            string registro = "1/" + B_Usuario.Text + "/" + B_Password.Text + "\0";
             socket.Send(Encoding.ASCII.GetBytes(registro));
+        }
+        delegate void mostrarLista(string[] lista);
+        delegate void ponerNombre();
+        public void ponerNombreEtiqueta()
+        {
+            NombreEtiquetaLbl.Text = this.mi_nombre;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -80,7 +100,7 @@ namespace Proyecto_V4
 
         private void button3_Click(object sender, EventArgs e) //  Boton Registrarse
         {
-            String registro = "2/" + B_Usuario.Text + "/" + B_Password.Text + "\0";
+            string registro = "2/" + B_Usuario.Text + "/" + B_Password.Text + "\0";
             socket.Send(Encoding.ASCII.GetBytes(registro));
         }
 
@@ -139,6 +159,7 @@ namespace Proyecto_V4
             bool res = f2.getRespuesta();
             if (res == true)
             {
+                // this.mi_nombre es el nombre del invitado
                 MessageBox.Show("Has aceptado");
                 string mensaje = "6/" + nombre + "/"+ this.mi_nombre + "/true";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
@@ -147,137 +168,19 @@ namespace Proyecto_V4
             else
             {
                 MessageBox.Show("Has rechazado");
-                string mensaje = "6/" + nombre + "/"+ this.mi_nombre+ "/false";
+                string mensaje = "6/" + nombre + "/"+ this.mi_nombre+ "/false"; 
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 socket.Send(msg);
             }
             res = this.res_partida;
 
         }
-
-        private void AtenderServidor()
+        private void ponerEnMarchaJuego(string perso)
         {
-
-            while (true)
-            {
-                //Recibimos mensaje del servidor
-                socket.Receive(data);
-                string[] trozos = Encoding.ASCII.GetString(data).TrimEnd('\0').Split('/');
-                int codigo = Convert.ToInt32(trozos[0]);
-
-                switch (codigo)
-                {
-                    case 1: // Respuesta loguearse
-                        resultado = trozos[1].Split('\0')[0];
-                        if (resultado == "0")
-                        {
-                            this.mi_nombre = B_Usuario.Text;
-                            MessageBox.Show("Correctamente Logueado " + this.mi_nombre);
-                        }
-                        if (resultado == "1")
-                        {
-                            MessageBox.Show("Contraseña incorrecta");
-                        }
-                        if (resultado == "2")
-                        {
-                            MessageBox.Show("Este correo no se ha registrado ");
-                        }
-
-                        break;
-
-                    case 2: // Respuesta Regristrarse
-
-                        if (resultado == "0")
-                        {
-                            MessageBox.Show("se ha registrado correctamente");
-                        }
-                        if (resultado == "1")
-                        {
-                            MessageBox.Show("ya se ha registrado este usuario");
-                        }
-                        break;
-
-                    case 3: // Respuestas de las 3 consultas
-                        resultado = trozos[1].Split('\0')[0];
-                        if (C_1.Checked)
-                        {
-                            MessageBox.Show("El jugador mayor de edad es :" + resultado);
-                        }
-                        if (C_2.Checked)
-                        {
-                            MessageBox.Show("El id del jugador con mayor puntaje es:" + resultado);
-                        }
-                        if (C_3.Checked)
-                        {
-                            MessageBox.Show("La division del jugador : " + cuestionador.Text + " es:" + resultado);
-                        }
-                        break;
-
-                    case 4: // notificacion lista conectados
-                        int cantidad = Convert.ToInt32(trozos[1]);
-                        dataGridView1.Rows.Clear();
-                        for (int i = 0; i < cantidad; i++)
-                        {
-                            dataGridView1.Rows.Add();
-                            dataGridView1[0, i].Value = trozos[i + 2];
-                        }
-
-
-                        break;
-                    case 5: //Respuesta de la invitacion 
-                        resultado = trozos[2].Split('\0')[0];
-                        string nombres;
-                        if (resultado == "SI")
-                        {
-                            nombres = trozos[1];
-                            
-                            MessageBox.Show("Se ha enviado la invitación del jugador : " + trozos[1]);
-                            usuarios_invitados[cont_invitados] = this.invitado;
-                            cont_invitados++;
-                            ThreadStart n = delegate { crearForm(nombres); };
-                            Thread t = new Thread(n);
-                            t.Start(); 
-                            
-                           
-
-                        }
-                        else
-                        {
-                            MessageBox.Show("Usuario NO EXISTE.");
-
-                            usuarios_invitados[cont_invitados] = "";
-                        }
-                       
-
-
-                        break;
-                    
-                    case 6:
-                        resultado = trozos[1].Split('\0')[0];
-                        if (resultado == "SI") // notificacion que ha aceptado
-                        {
-                          
-                            MessageBox.Show("Se juega la partida ");
-                        }
-
-                        else if (resultado == "NO") // notificacion que no ha aceptado
-                        {
-                            MessageBox.Show("Alguien ha rechazado, no se juega");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Error");
-                        }
-                        break;
-                }
-                codigo = 0;
-                trozos = null;
-
-            }
-
-
+            ig = new Interfaz_Grafica(Convert.ToInt32(perso), this.socket, this.mi_nombre);
+            //ig.miPersonaje(Convert.ToInt32(mensaje[2]));
+            ig.ShowDialog();
         }
-
         private void Invitar_Bt_Click(object sender, EventArgs e)
         {
             if (cont_invitados == 3)
@@ -312,19 +215,150 @@ namespace Proyecto_V4
                 }
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e)
+        public void ListaConectados(string[] trozos)
         {
-            B_Usuario.Enabled = false;
-            B_Password.Enabled = false;
-            RegisterBt.Enabled = false;
-            LoginBt.Enabled = false;
-            desconectarBt.Enabled = false;
-            box_invi.Enabled = false;
-            Invitar_Bt.Enabled = false;
-            B_Usuario.Text = "Edu";
-            B_Password.Text = "manedu";
+            int cantidad = Convert.ToInt32(trozos[1]);
+            dataGridView1.Rows.Clear();
+            for (int i = 0; i < cantidad; i++)
+            {
+                dataGridView1.Rows.Add();
+                dataGridView1[0, i].Value = trozos[i + 2];
+            }
+
         }
+
+       
+        private void AtenderServidor()
+        {
+            
+
+            while (true)
+            {
+                
+                //Recibimos mensaje del servidor
+                socket.Receive(data);
+                string[] trozos = Encoding.ASCII.GetString(data).TrimEnd('\0').Split('/');
+                int codigo = Convert.ToInt32(trozos[0]);
+               
+               
+                switch (codigo)
+                {
+                       
+                    case 1: // Respuesta loguearse
+                        resultado = trozos[1].Split('\0')[0];
+                        if (resultado == "0")
+
+                        {
+                            this.mi_nombre = B_Usuario.Text;
+                            MessageBox.Show("Correctamente Logueado " + this.mi_nombre);
+                            ponerNombre delegadoNombre = new ponerNombre(ponerNombreEtiqueta);
+                            NombreEtiquetaLbl.Invoke(delegadoNombre,new object[]{});
+                        }
+                        if (resultado == "1")
+                        {
+                            MessageBox.Show("Contraseña incorrecta");
+                        }
+                        if (resultado == "2")
+                        {
+                            MessageBox.Show("Este correo no se ha registrado ");
+                        }
+
+                        break;
+
+                    case 2: // Respuesta Regristrarse
+                        resultado = trozos[1].Split('\0')[0];
+                        if (resultado == "0")
+                        {
+                            MessageBox.Show("se ha registrado correctamente");
+                        }
+                        if (resultado == "1")
+                        {
+                            MessageBox.Show("ya se ha registrado este usuario");
+                        }
+                        break;
+
+                    case 3: // Respuestas de las 3 consultas
+                        resultado = trozos[1].Split('\0')[0];
+                        {
+                            MessageBox.Show("El jugador mayor de edad es :" + resultado);
+                        }
+                        if (C_2.Checked)
+                        {
+                            MessageBox.Show("El id del jugador con mayor puntaje es:" + resultado);
+                        }
+                        if (C_3.Checked)
+                        {
+                            MessageBox.Show("La division del jugador : " + cuestionador.Text + " es:" + resultado);
+                        }
+                        break;
+
+                    case 4: // notificacion lista conectados
+                        resultado = trozos[2].Split('\0')[0];
+                            mostrarLista delegado = new mostrarLista(ListaConectados);
+                            dataGridView1.Invoke(delegado, new object[] { trozos});
+                            break;
+
+                    case 5: //Respuesta de la invitacion 
+                        resultado = trozos[2].Split('\0')[0];
+                        string nombres;
+                        if (resultado == "SI")
+                        {
+                            nombres = trozos[1].Split('\0')[0];
+
+                            MessageBox.Show("Se ha enviado la invitación del jugador : " + nombres);
+                            usuarios_invitados[cont_invitados] = this.invitado;
+                            cont_invitados++;
+                            ThreadStart n = delegate { crearForm(nombres); };
+                            Thread t = new Thread(n);
+                            t.Start(); 
+                            
+                           
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Usuario NO EXISTE.");
+
+                            usuarios_invitados[cont_invitados] = "";
+                        }
+                       
+
+
+                        break;
+                    
+                    case 6:
+                        resultado = trozos[1].Split('\0')[0];
+                        if (resultado == "SI") // notificacion que ha aceptado
+                        {
+                            string numero = trozos[2];
+                            ThreadStart juego = delegate { ponerEnMarchaJuego(numero); };
+                            Thread tjuego = new Thread(juego);
+                            tjuego.Start();
+                        }
+
+                        else if (resultado == "NO") // notificacion que no ha aceptado
+                        {
+                            MessageBox.Show("Alguien ha rechazado, no se juega");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error");
+                        }
+                        break;
+                    case 7 :
+                        resultado = trozos[1].Split('\0')[0];
+                        ig.guardarFrase(resultado);
+                        break;
+                }
+                codigo = 0;
+                trozos = null;
+
+            }
+
+
+        }
+
+       
 
 
 
