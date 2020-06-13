@@ -1,0 +1,2 @@
+C:\Users\eduaucca\Desktop\Proyecto Final\cliente inicial\obj\x86\Debug\Proyecto_V1.exe
+C:\Users\eduaucca\Desktop\Proyecto Final\cliente inicial\obj\x86\Debug\Proyecto_V1.pdb

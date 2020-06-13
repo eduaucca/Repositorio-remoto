@@ -49,6 +49,9 @@
             this.NombreEtiquetaLbl = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.box_numInvitados = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -185,7 +188,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(483, 293);
+            this.label4.Location = new System.Drawing.Point(493, 388);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(241, 13);
             this.label4.TabIndex = 17;
@@ -193,16 +196,16 @@
             // 
             // box_invi
             // 
-            this.box_invi.Location = new System.Drawing.Point(547, 328);
+            this.box_invi.Location = new System.Drawing.Point(553, 422);
             this.box_invi.Name = "box_invi";
             this.box_invi.Size = new System.Drawing.Size(141, 20);
             this.box_invi.TabIndex = 18;
             // 
             // Invitar_Bt
             // 
-            this.Invitar_Bt.Location = new System.Drawing.Point(722, 325);
+            this.Invitar_Bt.Location = new System.Drawing.Point(730, 404);
             this.Invitar_Bt.Name = "Invitar_Bt";
-            this.Invitar_Bt.Size = new System.Drawing.Size(75, 23);
+            this.Invitar_Bt.Size = new System.Drawing.Size(96, 38);
             this.Invitar_Bt.TabIndex = 23;
             this.Invitar_Bt.Text = "Invitar";
             this.Invitar_Bt.UseVisualStyleBackColor = true;
@@ -211,7 +214,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(473, 417);
+            this.label5.Location = new System.Drawing.Point(303, 417);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(100, 13);
             this.label5.TabIndex = 25;
@@ -220,7 +223,7 @@
             // NombreEtiquetaLbl
             // 
             this.NombreEtiquetaLbl.AutoSize = true;
-            this.NombreEtiquetaLbl.Location = new System.Drawing.Point(593, 417);
+            this.NombreEtiquetaLbl.Location = new System.Drawing.Point(398, 417);
             this.NombreEtiquetaLbl.Name = "NombreEtiquetaLbl";
             this.NombreEtiquetaLbl.Size = new System.Drawing.Size(35, 13);
             this.NombreEtiquetaLbl.TabIndex = 26;
@@ -231,7 +234,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
-            this.dataGridView1.Location = new System.Drawing.Point(566, 29);
+            this.dataGridView1.Location = new System.Drawing.Point(580, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(143, 230);
             this.dataGridView1.TabIndex = 24;
@@ -241,10 +244,40 @@
             this.Column1.HeaderText = "Column1";
             this.Column1.Name = "Column1";
             // 
+            // box_numInvitados
+            // 
+            this.box_numInvitados.Location = new System.Drawing.Point(553, 326);
+            this.box_numInvitados.Name = "box_numInvitados";
+            this.box_numInvitados.Size = new System.Drawing.Size(141, 20);
+            this.box_numInvitados.TabIndex = 27;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(493, 296);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(244, 13);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "Escribe el numero de invitados  que vas a invitar : ";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(730, 317);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(98, 37);
+            this.button1.TabIndex = 29;
+            this.button1.Text = "Enviar numero";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(889, 489);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.box_numInvitados);
             this.Controls.Add(this.NombreEtiquetaLbl);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView1);
@@ -297,6 +330,9 @@
         private System.Windows.Forms.Label NombreEtiquetaLbl;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.TextBox box_numInvitados;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button button1;
     }
 }
 

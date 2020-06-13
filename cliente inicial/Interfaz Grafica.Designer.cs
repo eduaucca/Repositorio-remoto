@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this.lbl_nombre = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.box_msj = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.lbl_mensaje = new System.Windows.Forms.Label();
@@ -45,33 +42,6 @@
             this.lbl_nombre.Size = new System.Drawing.Size(42, 13);
             this.lbl_nombre.TabIndex = 0;
             this.lbl_nombre.Text = "nombre";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(584, 58);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(584, 93);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "label3";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(584, 129);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "label4";
             // 
             // box_msj
             // 
@@ -107,9 +77,6 @@
             this.Controls.Add(this.lbl_mensaje);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.box_msj);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lbl_nombre);
             this.Name = "Interfaz_Grafica";
             this.Text = "Interfaz_Grafica";
@@ -121,9 +88,6 @@
         #endregion
 
         private System.Windows.Forms.Label lbl_nombre;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox box_msj;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label lbl_mensaje;

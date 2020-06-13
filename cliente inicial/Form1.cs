@@ -28,15 +28,15 @@ namespace Proyecto_V4
         string[] usuarios_invitados = new string[4];
         string invitado;
         string mi_nombre;
-        bool res_partida;
+        bool res_partida = false;
         Interfaz_Grafica ig;
 
         public Form1()
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
-            direccion = IPAddress.Parse("147.83.117.22");
-            ipep = new IPEndPoint(direccion, 50020);
+            direccion = IPAddress.Parse("192.168.56.103");
+            ipep = new IPEndPoint(direccion, 9100);
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -52,7 +52,7 @@ namespace Proyecto_V4
         }
 
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // boton conectar
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
@@ -87,10 +87,10 @@ namespace Proyecto_V4
             socket.Send(Encoding.ASCII.GetBytes(registro));
         }
         delegate void mostrarLista(string[] lista);
-        delegate void ponerNombre();
-        public void ponerNombreEtiqueta()
+        delegate void ponerNombre(string nombre);
+        public void ponerNombreEtiqueta(string nombre)
         {
-            NombreEtiquetaLbl.Text = this.mi_nombre;
+            NombreEtiquetaLbl.Text = nombre;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -106,7 +106,7 @@ namespace Proyecto_V4
 
         private void B_cuestionar_Click(object sender, EventArgs e)
         {
-            if (C_1.Checked) //Dar el jugador que es  mayor de edad
+          /*  if (C_1.Checked) //Dar el jugador que es  mayor de edad
             {
                 registro = "3/1/";
                 // Enviamos al servidor el nombre tecleado
@@ -125,7 +125,7 @@ namespace Proyecto_V4
                 registro = "3/3/" + cuestionador.Text;
                 // Enviamos al servidor el nombre tecleado
                 socket.Send(Encoding.ASCII.GetBytes(registro));
-            }
+            } */
         }
 
         private void button2_Click_1(object sender, EventArgs e) // boton desconectar
@@ -252,7 +252,7 @@ namespace Proyecto_V4
                             this.mi_nombre = B_Usuario.Text;
                             MessageBox.Show("Correctamente Logueado " + this.mi_nombre);
                             ponerNombre delegadoNombre = new ponerNombre(ponerNombreEtiqueta);
-                            NombreEtiquetaLbl.Invoke(delegadoNombre,new object[]{});
+                            NombreEtiquetaLbl.Invoke(delegadoNombre,new object[]{this.mi_nombre});
                         }
                         if (resultado == "1")
                         {
@@ -277,8 +277,22 @@ namespace Proyecto_V4
                         }
                         break;
 
-                    case 3: // Respuestas de las 3 consultas
+                    case 3: // Respuesta numero de partidas
+
                         resultado = trozos[1].Split('\0')[0];
+                       
+                        if (resultado == "SI")
+                        {
+                          
+                            MessageBox.Show("se ha creado la partida");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error, no se ha creado la partida");
+                        }
+
+
+                       /* resultado = trozos[1].Split('\0')[0];
                         {
                             MessageBox.Show("El jugador mayor de edad es :" + resultado);
                         }
@@ -289,7 +303,7 @@ namespace Proyecto_V4
                         if (C_3.Checked)
                         {
                             MessageBox.Show("La division del jugador : " + cuestionador.Text + " es:" + resultado);
-                        }
+                        }*/
                         break;
 
                     case 4: // notificacion lista conectados
@@ -356,6 +370,18 @@ namespace Proyecto_V4
             }
 
 
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            string mensaje = "3/" + box_numInvitados.Text ;
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+            socket.Send(msg);
         }
 
        

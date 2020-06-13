@@ -8,6 +8,7 @@
 #include <mysql.h>
 #include <pthread.h>
 #include <stdbool.h>
+//#include <my_global.h>
 typedef struct
 {
 	char usuario[50];
@@ -18,7 +19,8 @@ typedef struct
 {
 	TUsuario usuarios[100];
 	int num;
-}TConectados;
+}
+TConectados;
 TConectados lista;
 // Lista invitados
 typedef struct
@@ -35,6 +37,7 @@ typedef struct
 TInvitados lista_partida;
 int partida_activa = 0;
 char creador_partida[20];
+int num_jugadores = 0;
 
 //MYSQL//
 int err;
@@ -59,7 +62,7 @@ char buff2[512];
 
 //Devuelve 0 si se loguea bien
 //Devuelve 1 si no
-int Log_In (char nombre[20], char password[20])
+int Log_In (char nombre[20], char password[20], int socket_conn)
 {
 	int comparador;
 	
@@ -92,14 +95,12 @@ int Log_In (char nombre[20], char password[20])
 	comparador = strcmp(password, row[0]); //comparamos la password dada con la real
 	if (comparador == 0) //Password correcta*/
 	{
-		printf("Correctly Logged\n");
-		write(sock_conn,"1/0", sizeof("1/0"));
+	
 		return 0;
 	}
 	if (comparador != 0) //Password incorrecta
 	{
-		printf("Password error\n");
-		write(sock_conn,"1/1", sizeof("1/1"));
+		
 		return 1;
 	}
 }
@@ -337,7 +338,7 @@ void Dame_ListaConectados(TConectados *l) // nos mostrara la lista de conectados
 	}
 }
 void Dame_ListaInvitados(TInvitados *l) // nos mostrara la lista de invitados
-{
+{   printf("se muestra la lista de invitados\n");
 	for (int i = 0; i< l->num;i++)
 	{
 		printf("%d -> usuario : %s | socket: %d | respuesta: %d\n",i , l->usuarios[i].nombre,l->usuarios[i].socket,l->usuarios[i].notificacion);
@@ -481,24 +482,27 @@ void *AtenderCliente(void *socket)
 			
 			// Ahora recibimos sus credenciales, que dejamos en buff
 			
-			int	logueado = Log_In (nombre, password);
+			int	logueado = Log_In (nombre, password,sock_conn);
 			
 			
 			if (logueado == 0) // se loguea correctamente
 			{
-				
+				printf("Correctly Logged\n");
+				write(sock_conn,"1/0", sizeof("1/0"));
+				pthread_mutex_lock(&mutex);
 				int add = Add_User(&lista, sock_conn, nombre);
+				pthread_mutex_unlock(&mutex);
 				Update_Conectados(&lista);
 				
 				
 				if (add == 0) 
 				{
-					printf ("Se ha a�adido al usuario correctamente\n");
-					// se a�ade correctamente
+					printf ("Se ha añadido al usuario correctamente\n");
+					// se añade correctamente
 				}
 				else if (add == -1)
 				{
-					printf ("No se ha podido a?adir al usuario\n"); // la lista esta llena, no se puede a?adir
+					printf ("No se ha podido añadir al usuario\n"); // la lista esta llena, no se puede a?adir
 				}
 				
 				
@@ -506,15 +510,15 @@ void *AtenderCliente(void *socket)
 			
 			if(logueado == 1)
 			{
-				printf("contrase?a incorrecta");
-				
+				printf("contraseña incorrecta");
+				write(sock_conn,"1/1", sizeof("1/0"));
 			}
 			else if(logueado == -1)
 			{
 				printf("el nombre no se encuentra en la DB"); // el nombre no esta en la DB
 			}
 			
-			pthread_mutex_unlock(&mutex);
+			
 			
 			
 			// Muestrame los conectados de la lista
@@ -547,7 +551,7 @@ void *AtenderCliente(void *socket)
 			select = 100;
 		}
 		
-		if (select == 3) //Dar el nombre del jugador mayor de edad
+		/*if (select == 3) //Dar el nombre del jugador mayor de edad
 		{ 
 			p = strtok (NULL, "/");
 			cuestion = atoi(p);
@@ -587,28 +591,62 @@ void *AtenderCliente(void *socket)
 			
 			
 			
-		}
-		if(select == 5) // Enviar la invitacion
-		{
-			printf("entramos a la seleccion 5\n");
+		}*/
+		if (select == 3) // Peticion al servidor para que el usuario pueda crear la partida
+		{   
+			p = strtok (NULL, "/");
+			int numero_invitados = atoi(p);
 			
 			if(partida_activa == 1 && strcmp(creador_partida,nombre)!=0)
 			{	printf("Existe una partida creada \n");
 			}
-			else
+			 
+	       else 
 			{
-				partida_activa = 1;
-				strcpy(creador_partida, nombre); // 
-				printf("Creador de la partida: %s\n",creador_partida);
-				printf("No me interrumpas ahora\n");
-				//Verificamos el numero de invitados 
-				pthread_mutex_lock(&mutex);
-				strcpy(lista_partida.usuarios[lista_partida.num].nombre,nombre);
-				lista_partida.usuarios[lista_partida.num].notificacion = 1 ; // el cliente que invita va crear la partida
-				lista_partida.usuarios[lista_partida.num].socket = sock_conn;
-				lista_partida.num = lista_partida.num + 1; // se a�ade al cliente que va invitar a la lista
-				pthread_mutex_unlock(&mutex);
-				printf("ahora puedes interrumpir\n");
+			
+			partida_activa = 1;
+			strcpy(creador_partida, nombre); // 
+			printf("Creador de la partida: %s\n",creador_partida);
+			printf("Empieza el mutex\n");
+			printf("Numero de invitados: %d",numero_invitados);
+			//Verificamos el numero de invitados 
+			pthread_mutex_lock(&mutex);
+			
+			for(int i =0 ; i< numero_invitados+1; i++)
+			{
+				
+				strcpy(lista_partida.usuarios[i].nombre,"");
+			lista_partida.usuarios[i].notificacion = -1 ; // el cliente que invita va crear la partida
+			lista_partida.usuarios[i].socket = 0;
+			} 
+			lista_partida.num = numero_invitados + 1;
+			
+			//Guarda el creador de la partida
+			strcpy(lista_partida.usuarios[0].nombre,nombre);
+			lista_partida.usuarios[0].notificacion = 1 ; 
+			lista_partida.usuarios[0].socket = sock_conn;
+			num_jugadores = num_jugadores + 1;
+			pthread_mutex_unlock(&mutex);
+			printf("Termina el mutex\n");
+			Dame_ListaInvitados(&lista_partida);
+			
+			printf("Se mostro la lista de invitados");
+			
+			sprintf(respuesta, "3/SI");
+			write(sock_conn,respuesta,sizeof(respuesta));
+			
+			}
+		}
+		if(select == 5) // Enviar la invitacion
+		{
+			
+			printf("entramos a la seleccion 5\n");
+			
+		     
+			
+			if( strcmp(nombre,lista_partida.usuarios[0].nombre )==0)
+			{ 
+				
 				
 				// INVITAR
 				printf("partida_activa : %d\n",partida_activa);
@@ -625,14 +663,16 @@ void *AtenderCliente(void *socket)
 					printf("Ahora empieza el mutex \n");
 					pthread_mutex_lock(&mutex);
 					//Verificamos el numero de invitados
-					strcpy(lista_partida.usuarios[lista_partida.num].nombre, Invitado);
-					lista_partida.usuarios[lista_partida.num].notificacion = -1 ; // todavia no ha aceptado (no ha respondido el invitado)
-					lista_partida.usuarios[lista_partida.num].socket = atoi(sock_inv); //Se guarda el socket para luego poder invitar a un usuario a jugar 
-					lista_partida.num = lista_partida.num + 1;
+					strcpy(lista_partida.usuarios[num_jugadores].nombre, Invitado);
+					 // todavia no ha aceptado (no ha respondido el invitado)
+					lista_partida.usuarios[num_jugadores].socket = atoi(sock_inv); //Se guarda el socket para luego poder invitar a un usuario a jugar 
+					num_jugadores = num_jugadores + 1;
 					printf("Ahora termina el mutex\n");
 					pthread_mutex_unlock(&mutex);
 					printf ("A continuacion vemos la lista de invitados\n");
+					
 					Dame_ListaInvitados(&lista_partida);
+					
 					printf ("Fin de la lista invitados\n");
 					
 					printf("Socket de la persona que vamos a invitar : %s\n",sock_inv);
@@ -650,10 +690,11 @@ void *AtenderCliente(void *socket)
 				}
 				
 				
-			}
 			
 			select = 100;
 			
+		    
+			}
 		}
 		if (select == 6) //Responder a la invitacion
 		{ 
@@ -687,11 +728,11 @@ void *AtenderCliente(void *socket)
 				//Vemos la lista de invitados
 				Dame_ListaInvitados(&lista_partida);
 			}
-			printf("Numero de invitados : %d\n",lista_partida.num);
+			printf("Numero de invitados : %d\n",num_jugadores);
 			printf("  Empieza la comprobacion\n");
 			
-			if(lista_partida.num > 1)
-			{
+			//if(num_jugadores > 1)
+			//{
 				printf("Comprobamos\n");
 				int comprobar = comprobar_TodosAceptan(&lista_partida);
 				if(comprobar == 0 )
@@ -709,7 +750,7 @@ void *AtenderCliente(void *socket)
 					printf (" No se juega la partida :( \n");
 					enviarMensajeUsuarios(&lista_partida, "NO");
 				}
-			}
+			//}
 			printf("-----Fin de la comprobacion----\n");
 			
 			select = 100;
@@ -750,7 +791,8 @@ int main(int argc, char *argv[])
 	//MYSQL//
 	//Creamos una conexion al servidor MYSQL 
 	conn = mysql_init(NULL);
-	if (conn==NULL) {
+	if (conn==NULL) 
+	{
 		printf ("Error al crear la conexion: %u %s\n", 
 				mysql_errno(conn), mysql_error(conn));
 		exit (1);
@@ -767,7 +809,7 @@ int main(int argc, char *argv[])
 	}
 	
 	//entramos en la base de datos "juego"
-	err=mysql_query (conn, "use juego");
+	err=mysql_query(conn, "use juego");
 	if (err!=0)  //por si la base de datos no existe
 	{
 		printf("Error al seleccionar la base de datos\n");
@@ -792,7 +834,7 @@ int main(int argc, char *argv[])
 	//htonl formatea el numero que recibe al formato necesario
 	serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
 	// escucharemos en el port 9055 o aprecidos en caso de error de blind
-	serv_adr.sin_port = htons(9050);
+	serv_adr.sin_port = htons(9100);
 	if (bind(sock_listen, (struct sockaddr *) &serv_adr, sizeof(serv_adr)) < 0)
 		printf ("Error al bind");
 	
@@ -822,4 +864,6 @@ int main(int argc, char *argv[])
 	
 	return 0;
 }
+
+
 
